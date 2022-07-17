@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: volodina-hw-1-ingress
+  namespace: otus-hw-1-volodina
+
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^/otusapp/(.*)$ /health permanent;
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - backend:
+              service:
+                name: volodina-hw-1-service
+                port:
+                  number: 8000
+            pathType: Prefix
+            path: /
